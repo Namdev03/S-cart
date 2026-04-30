@@ -1,0 +1,22 @@
+require('dotenv').config()
+const express = require('express')
+const userRoutes = require('./Routes/User.Routes')
+const databaseConnection = require('./Config/Database.Config')
+//============instance===========
+const server = express()
+//============middelwares===========
+server.use(express.json())
+server.use(express.urlencoded({ extended: true }))
+//============user Routes===========
+server.use('/user',userRoutes)
+//===========listion the server===========
+const port = process.env.PORT
+server.listen(port,async()=>{
+    try {
+        await databaseConnection()
+        console.log(`server is live on port ${port}`);
+        
+    } catch (error) {
+        process.exit(1)
+    }
+})
