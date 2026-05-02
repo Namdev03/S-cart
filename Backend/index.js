@@ -2,11 +2,13 @@ require('dotenv').config()
 const express = require('express')
 const userRoutes = require('./Routes/User.Routes')
 const databaseConnection = require('./Config/Database.Config')
+const cookie = require('cookie-parser')
 //============instance===========
 const server = express()
 //============middelwares===========
 server.use(express.json())
 server.use(express.urlencoded({ extended: true }))
+server.use(cookie())
 //============user Routes===========
 server.use('/user',userRoutes)
 //===========listion the server===========
