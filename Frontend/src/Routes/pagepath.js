@@ -1,7 +1,8 @@
 
 const pagepath = {
-    landingpage:'/',
-    login:'/login',
-    register:'/register'
+    LANDINGPAGE:'/',
+    HOME:'/home',
+    LOGIN:'/login',
+    REGISTER:'/register'
 }
 export default pagepath
