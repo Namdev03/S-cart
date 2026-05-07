@@ -1,7 +1,7 @@
 const endPoits = {
     //Authentiction End points
     LOGIN :'/user/login',
-    REGISTER:'/usre/',
+    REGISTER:'/user/',
     LOGOUT:'/user/logout',              
     VERIFY:'/user/verify'
 }

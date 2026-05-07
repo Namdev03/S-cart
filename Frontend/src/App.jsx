@@ -5,6 +5,7 @@ import LandingPage from './pages/LandingPage'
 import Homepage from './pages/homepage'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import LoadingPage from './pages/Loadingpage'
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Route path={pagepath.HOME} element={<Homepage/>} />
       <Route path={pagepath.LOGIN} element={<Login/>} />
       <Route path={pagepath.REGISTER} element={<Register/>} />
+      <Route path={pagepath.LOADING} element={<LoadingPage/>} />
  </Routes >
   )
 }

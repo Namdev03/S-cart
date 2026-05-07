@@ -22,7 +22,7 @@ async function registerUser(req, res) {
             password: hashpaswword
         }
         const register = await usermodel.create(toSend)
-        res.status(201).json({ message: "successfully registerd", data: toSend })
+        res.status(201).json({ message: `successfully registerd ${toSend.payload.name}`, data: toSend })
     } catch (error) {
         res.status(500).json({ message: error.message })
     }

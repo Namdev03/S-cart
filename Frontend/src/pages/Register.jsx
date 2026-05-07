@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
 import {
   User,
   Mail,
@@ -10,22 +11,33 @@ import {
 } from "lucide-react";
 import { Link } from "react-router";
 import pagepath from "../Routes/pagepath";
-
+import Loadingpage from "./Loadingpage";
+import { registerSync } from "../Store/userSlice";
+import { logout } from "../Services/UserApis";
 export default function Register() {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting }
   } = useForm();
+  const dispatch = useDispatch()
+  // const {isLoading} = useSelector((state)=>state.user)
 
   const [showPassword, setShowPassword] = React.useState(false);
+ async function registerApi(payload) {
+  try {
+    const response = await dispatch(
+      registerSync(payload)
+    ).unwrap();
 
-  const onSubmit = async (data) => {
-    // simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    console.log("Register Data:", data);
-  };
+    alert(response);
 
+    console.log(response);
+  } catch (error) {
+    alert(error);
+    console.log(error);
+  }
+}
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-gray-100 px-4">
       
@@ -41,7 +53,7 @@ export default function Register() {
         </p>
 
         {/* Form */}
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+        <form onSubmit={handleSubmit(registerApi)} className="space-y-5">
 
           {/* Name */}
           <div>
