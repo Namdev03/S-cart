@@ -19,10 +19,10 @@ async function registerUser(req, res) {
         const hashpaswword = await bcrypt.hash(payload.password, 10)
         const toSend = {
             ...payload,
-            password: hashpaswword
+            password: hashpaswword,
         }
         const register = await usermodel.create(toSend)
-        res.status(201).json({ message: `successfully registerd ${toSend.payload.name}`, data: toSend })
+        res.status(201).json({ message: `successfully registerd ${payload.name}`, data: toSend })
     } catch (error) {
         res.status(500).json({ message: error.message })
     }
@@ -42,13 +42,14 @@ async function loginUser(req, res) {
             id: isExist._id,
             name: isExist.name,
             email: isExist.email,
-            role: isExist.role
+            role: isExist.role,
+            profilepic:isExist.profilepic
         }
         const generatejwt = jwt.sign(toSend, process.env.SECRATE_KEY, {
             expiresIn: 2 * 60 * 60 * 1000
         })
         res.cookie("token", generatejwt, cookieOptions)
-        res.status(200).json({ message: "login successfully", data: toSend, })
+        res.status(200).json({ message: `Wellcome back ${toSend.name}`, data:toSend, })
     } catch (error) {
         res.status(500).json({ message: error.message })
     }
@@ -72,13 +73,11 @@ async function verifyuser(req, res) {
         const token = req.cookies.token
         if (!token) {
             return res.status(401).json({ message: "invalid token" })
-
         }
         const decode = jwt.verify(token, process.env.SECRATE_KEY)
         if (!decode) {
             return res.status(401).json({ message: "unauthrized invalid token" })
         }
-
         return res.status(200).json({
             message: "User verified",
             user: decode,

@@ -5,7 +5,7 @@ async function register(payload) {
         const response = await axiosInstance.post(endPoits.REGISTER,payload)
         return response?.data
     } catch (error) {
-        return error.response.data.message
+        return error?.response?.data
     }
 }
 async function login(payload) {
@@ -13,7 +13,7 @@ async function login(payload) {
         const response = await axiosInstance.post(endPoits.LOGIN,payload)
         return response?.data
     } catch (error) {
-        return(error?.response?.data?.message)
+        return error?.response?.data
     }
 }
 async function logout() {
@@ -29,7 +29,7 @@ async function verify() {
         const response = await axiosInstance.get(endPoits.VERIFY)
         return response?.data
     } catch (error) {
-        return(error?.response?.data?.message)
+        return(error?.response?.data)
     }
 }
 export {register,login,logout,verify}

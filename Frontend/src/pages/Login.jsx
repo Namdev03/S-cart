@@ -1,8 +1,10 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Mail, Lock, Eye, EyeOff, Loader2 } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import pagepath from "../Routes/pagepath";
+import { loginSync } from "../Store/userSlice";
+import { useDispatch } from "react-redux";
 
 export default function Login() {
   const {
@@ -10,13 +12,22 @@ export default function Login() {
     handleSubmit,
     formState: { errors, isSubmitting }
   } = useForm();
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [showPassword, setShowPassword] = React.useState(false);
-  const onSubmit = async (data) => {
-    // simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    console.log("Login Data:", data);
-  };
-
+async function loginapi(payload) {
+  try {
+    const response = await dispatch(loginSync(payload))
+    alert (response.payload?.message)
+    console.log(response);
+    
+    navigate(pagepath.HOME)
+    // console.log(response.payload.message);
+    
+  } catch (error) {
+     alert (error.response.message)
+  }
+}
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
       
@@ -26,7 +37,7 @@ export default function Login() {
           Login to Your Account
         </h2>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+        <form onSubmit={handleSubmit(loginapi)} className="space-y-5">
 
           {/* Email */}
           <div>

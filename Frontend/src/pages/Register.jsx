@@ -29,12 +29,10 @@ export default function Register() {
     const response = await dispatch(
       registerSync(payload)
     ).unwrap();
-
-    alert(response);
-
-    console.log(response);
+    alert(response.message);
+    // console.log(response);
   } catch (error) {
-    alert(error);
+    alert(error.response.message);
     console.log(error);
   }
 }

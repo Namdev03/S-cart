@@ -10,17 +10,12 @@ import {
   Heart,
   Search
 } from "lucide-react";
+import { useSelector } from "react-redux";
 
 export default function HomeNavBar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  // Dummy user (replace with real data later)
-  const user = {
-    name: "John Doe",
-    email: "john@example.com",
-    avatar: "https://i.pravatar.cc/40"
-  };
-
+   
+const {userDetails} = useSelector((store)=>store.user)
   return (
     <div className="relative">
       {/* Navbar */}
@@ -53,11 +48,11 @@ export default function HomeNavBar() {
             className="flex items-center gap-2 hover:text-blue-600 transition"
           >
             <img
-              src={user.avatar}
+              src={userDetails.profilepic}
               alt="profile"
               className="w-8 h-8 rounded-full object-cover border"
             />
-            <span className="text-sm font-medium">{user.name}</span>
+            <span className="text-sm font-medium">{userDetails.name}</span>
           </button>
         </div>
 
@@ -99,13 +94,13 @@ export default function HomeNavBar() {
         {/* Profile Header */}
         <div className="flex items-center gap-3 p-4 border-b">
           <img
-            src={user.avatar}
+            src={userDetails.profilepic}
             alt="profile"
             className="w-10 h-10 rounded-full object-cover"
           />
           <div>
-            <h3 className="font-semibold">{user.name}</h3>
-            <p className="text-xs text-gray-500">{user.email}</p>
+            <h3 className="font-semibold">{userDetails.name}</h3>
+            <p className="text-xs text-gray-500">{userDetails.email}</p>
           </div>
 
           <button

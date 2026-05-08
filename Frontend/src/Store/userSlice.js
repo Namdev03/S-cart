@@ -7,9 +7,9 @@ import {
 } from "../Services/UserApis";
 
 const initialState = {
-  isLoading: false,
+  isLoading: true,
   isLoginIn: false,
-  userDetails: "",
+  userDetails: {},
   userId: "",
   error: null,
 };
@@ -21,11 +21,18 @@ export const registerSync = createAsyncThunk(
       const response = await register(payload);
       return response
     } catch (error) {
-      return (error);
+      return error
     }
   }
 );
-
+export const loginSync = createAsyncThunk('/user/login',async(payload)=>{
+try {
+    const response = await login(payload)
+    return response
+} catch (error) {
+    return error
+}
+})
 const userSlice = createSlice({
   name: "user",
 
@@ -47,12 +54,16 @@ const userSlice = createSlice({
         state.isLoginIn = true;
         state.userDetails = action.payload;
       })
-
-      // Rejected
       .addCase(registerSync.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.payload;
-      });
+        state.error = action.payload.data;
+      }).addCase(loginSync.pending,(state,action)=>{
+        state.isLoading = true
+      }).addCase(loginSync.fulfilled,(state,action)=>{
+        state.isLoading =false
+        state.isLoginIn =true
+        state.userDetails = action.payload.data
+      })
   },
 });
 
